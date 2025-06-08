@@ -126,7 +126,7 @@ class _AddOrderScreenState extends ConsumerState<AddOrderScreen> {
             textColor: Colors.white,
           );
           if (orderState is AsyncData) {
-            context.go(AppRoutes.orders);
+            context.go(AppRoutes.ordersShipments);
           }
         }
       } catch (e) {
