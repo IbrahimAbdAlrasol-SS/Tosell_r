@@ -1,3 +1,5 @@
+// lib/core/router/app_router.dart
+
 import 'package:Tosell/Features/orders/screens/main_order_shipments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -54,7 +56,6 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => BackgroundWrapper(
         child: ChangeStateScreen(
           code: state.extra as String,
-          // code: "111111111",
         ),
       ),
     ),
@@ -68,27 +69,25 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const BackgroundWrapper(child: OrderCompleted()),
     ),
 
-    // GoRoute(
-    //   path: AppRoutes.cart,
-    //   builder: (context, state) => const CartPage(),
-    // ),
+    // New route for orders with shipment filter (used by TabShipmentScreen)
     GoRoute(
-  path: AppRoutes.ordersShipments,
-  pageBuilder: (context, state) => CustomTransitionPage(
-    key: state.pageKey,
-    child: BackgroundWrapper(
-      child: MainOrderShipmentsScreen(
-        filter: state.extra as OrderFilter?,
+      path: AppRoutes.orders,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: BackgroundWrapper(
+          child: OrdersScreen(
+            filter: state.extra as OrderFilter?,
+          ),
+        ),
+        transitionsBuilder: _slideFromLeftTransition,
       ),
     ),
-    transitionsBuilder: _slideFromLeftTransition,
-  ),
-),
+
     GoRoute(
       path: AppRoutes.notifications,
       builder: (context, state) => const BackgroundWrapper(child: NotificationPage()),
     ),
- GoRoute(
+    GoRoute(
       path: AppRoutes.deleteAccount,
       builder: (context, state) => const BackgroundWrapper(child: DeleteAccountScreen()),
     ),
@@ -105,7 +104,6 @@ final GoRouter appRouter = GoRouter(
         ),
       ),
     ),
-    // TransactionDetaileScreen
     GoRoute(
       path: AppRoutes.orderDetails,
       builder: (context, state) => BackgroundWrapper(
@@ -130,7 +128,7 @@ final GoRouter appRouter = GoRouter(
         ),
       ),
     ),
-     GoRoute(
+    GoRoute(
       path: AppRoutes.changePassword,
       builder: (context, state) => const BackgroundWrapper(
         child: ChangePasswordScreen(),
@@ -167,56 +165,60 @@ final GoRouter appRouter = GoRouter(
     ),
 
     GoRoute(
-          path: AppRoutes.editProfile,
-          builder: (context, state) => const BackgroundWrapper(child: EditProfileScreen()),
-        ),
-        GoRoute(
-          path: AppRoutes.SupportRecord,
-          builder: (context, state) => const SupportRecordScreen(),
-        ),
+      path: AppRoutes.editProfile,
+      builder: (context, state) => const BackgroundWrapper(child: EditProfileScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.SupportRecord,
+      builder: (context, state) => const SupportRecordScreen(),
+    ),
 
     //! Shell Route for Bottom Navigation
     ShellRoute(
       builder: (context, state, child) => NavigationPage(child: child),
       
       routes: [
-         GoRoute(
+        GoRoute(
           path: AppRoutes.statistics,
           pageBuilder: (context, state) => CustomTransitionPage(
             key: state.pageKey,
             child: const BackgroundWrapper(child: StatisticsScreen()),
             transitionsBuilder: _slideFromLeftTransition,
-          ),),
-          GoRoute(
+          ),
+        ),
+        GoRoute(
           path: AppRoutes.home,
           pageBuilder: (context, state) => CustomTransitionPage(
             key: state.pageKey,
             child: const BackgroundWrapper(child: HomeScreen()),
             transitionsBuilder: _slideFromLeftTransition,
-          ),),
-         GoRoute(
-          path: AppRoutes.orders,
+          ),
+        ),
+        // Main orders/shipments screen in navigation
+        GoRoute(
+          path: AppRoutes.ordersShipments,
           pageBuilder: (context, state) => CustomTransitionPage(
             key: state.pageKey,
-            child:  BackgroundWrapper(child: OrdersScreen(
-              filter: state.extra as OrderFilter?,
-            )),
+            child: BackgroundWrapper(
+              child: MainOrderShipmentsScreen(
+                filter: state.extra as OrderFilter?,
+              ),
+            ),
             transitionsBuilder: _slideFromLeftTransition,
-          ),),
-         GoRoute(
+          ),
+        ),
+        GoRoute(
           path: AppRoutes.myProfile,
           pageBuilder: (context, state) => CustomTransitionPage(
             key: state.pageKey,
             child: const BackgroundWrapper(child: MyProfileScreen()),
             transitionsBuilder: _slideFromLeftTransition,
-          ),),
-        
-        
+          ),
+        ),
       ],
     ),
   ],
 );
-
 
 /// Fade Transition
 Widget _fadeTransition(BuildContext context, Animation<double> animation,
@@ -242,8 +244,6 @@ Widget _slideFromLeftTransition(
   );
 }
 
-
-
 class AppRoutes {
   static const String splash = '/';
   static const String orderCompleted = '/orderCompleted';
@@ -253,9 +253,9 @@ class AppRoutes {
   static const String chat = '/chat';
   static const String orderDetails = '/order-details';
   static const String home = '/home';
-  static const String ordersShipments  = '/orders-shipments';
+  static const String ordersShipments = '/orders-shipments';
+  static const String orders = '/orders'; // Keep this for shipment details navigation
 
-  static const String orders = '/orders';
   static const String statistics = '/statistics';
   static const String myProfile = '/my_profile';
   static const String editProfile = '/edit_profile';
