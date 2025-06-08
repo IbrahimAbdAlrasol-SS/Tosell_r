@@ -1,3 +1,4 @@
+import 'package:Tosell/Features/orders/screens/main_order_shipments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:Tosell/Features/navigation.dart';
@@ -72,9 +73,17 @@ final GoRouter appRouter = GoRouter(
     //   builder: (context, state) => const CartPage(),
     // ),
     GoRoute(
-      path: AppRoutes.order,
-      builder: (context, state) => const BackgroundWrapper(child: OrderScreen()),
+  path: AppRoutes.ordersShipments,
+  pageBuilder: (context, state) => CustomTransitionPage(
+    key: state.pageKey,
+    child: BackgroundWrapper(
+      child: MainOrderShipmentsScreen(
+        filter: state.extra as OrderFilter?,
+      ),
     ),
+    transitionsBuilder: _slideFromLeftTransition,
+  ),
+),
     GoRoute(
       path: AppRoutes.notifications,
       builder: (context, state) => const BackgroundWrapper(child: NotificationPage()),
@@ -244,6 +253,8 @@ class AppRoutes {
   static const String chat = '/chat';
   static const String orderDetails = '/order-details';
   static const String home = '/home';
+  static const String ordersShipments  = '/orders-shipments';
+
   static const String orders = '/orders';
   static const String statistics = '/statistics';
   static const String myProfile = '/my_profile';
