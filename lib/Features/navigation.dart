@@ -23,7 +23,7 @@ class _NavigationPageState extends ConsumerState<NavigationPage> {
 
   final List<String> locations = [
     AppRoutes.home,
-    AppRoutes.orders,
+    AppRoutes.ordersShipments,  // تم التغيير من AppRoutes.orders إلى AppRoutes.ordersShipments
     AppRoutes.addOrder,
     AppRoutes.statistics,
     AppRoutes.myProfile,
@@ -145,5 +145,3 @@ class _NavigationPageState extends ConsumerState<NavigationPage> {
     return res;
   }
 }
-
-

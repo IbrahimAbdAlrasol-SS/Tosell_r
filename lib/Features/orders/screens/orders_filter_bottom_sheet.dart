@@ -1,7 +1,6 @@
 import 'package:Tosell/Features/orders/models/OrderFilter.dart';
 import 'package:Tosell/Features/orders/models/order_enum.dart';
 import 'package:Tosell/core/constants/spaces.dart';
-import 'package:Tosell/core/router/app_router.dart';
 import 'package:Tosell/core/utils/extensions.dart';
 import 'package:Tosell/core/widgets/CustomTextFormField.dart';
 import 'package:Tosell/core/widgets/DatePickerTextField%20.dart';
@@ -175,7 +174,6 @@ class _OrdersFilterBottomSheetState
                         });
                       }
                     },
-                    // ...
                   ),
                   const Gap(AppSpaces.large),
                   Text(
@@ -267,16 +265,12 @@ class _OrdersFilterBottomSheetState
             child: FillButton(
               label: "بحث",
               onPressed: () {
-                context.pop();
-                context.go(AppRoutes.orders,
-                    extra: OrderFilter(
-                      status: int.tryParse(orderStateController.text) ?? 0,
-                    )
-                    // orderStatus
-                    // .where(
-                    //     (state) => state.value == orderStateController.text).first
-                    // .name
-                    );
+                // Create filter and return it to the calling screen
+                final filter = OrderFilter(
+                  status: int.tryParse(orderStateController.text),
+                  // Add other filter parameters as needed
+                );
+                context.pop(filter); // Return filter to caller
               },
             ),
           ),

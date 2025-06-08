@@ -254,7 +254,7 @@ class AppRoutes {
   static const String orderDetails = '/order-details';
   static const String home = '/home';
   static const String ordersShipments = '/orders-shipments';
-  static const String orders = '/orders'; // Keep this for shipment details navigation
+  static const String orders = '/orders-shipments'; // Keep this for shipment details navigation
 
   static const String statistics = '/statistics';
   static const String myProfile = '/my_profile';
