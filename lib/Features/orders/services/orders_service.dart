@@ -62,27 +62,4 @@ class OrdersService {
       rethrow;
     }
   }
-
-  Future<(bool success, String? error)> createShipment({
-    required List<String> orderIds,
-  }) async {
-    try {
-      final data = {
-        "orders": orderIds.map((id) => {"orderId": id}).toList(),
-      };
-
-      var result = await BaseClient<dynamic>().create(
-        endpoint: '/shipment/pick-up',
-        data: data,
-      );
-
-      if (result.code != null && result.code! >= 200 && result.code! < 300) {
-        return (true, null);
-      } else {
-        return (false, result.message ?? 'فشل في إنشاء الشحنة');
-      }
-    } catch (e) {
-      return (false, e.toString());
-    }
-  }
 }

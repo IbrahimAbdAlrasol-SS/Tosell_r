@@ -41,27 +41,6 @@ class OrdersNotifier extends _$OrdersNotifier {
     }
   }
 
-  Future<bool> createShipment(List<String> orderIds) async {
-    try {
-      if (orderIds.isEmpty) {
-        return false;
-      }
-
-      var result = await _service.createShipment(orderIds: orderIds);
-      
-      if (result.$1) {
-        // Success - optionally refresh the orders list
-        // You can refresh the state here if needed
-        return true;
-      } else {
-        // Handle error
-        throw Exception(result.$2 ?? 'فشل في إنشاء الشحنة');
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   @override
   FutureOr<List<Order>> build() async {
     var result = await getAll();
